@@ -19,7 +19,14 @@ namespace Model
 
         public Track NextTrack()
         {
-            return null;
+            try
+            {
+                return Tracks.Dequeue();
+            }
+            catch(System.InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }

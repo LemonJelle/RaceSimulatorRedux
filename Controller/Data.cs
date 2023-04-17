@@ -10,6 +10,7 @@ namespace Controller
     public static class Data
     {
         public static Competition? Competition { get; set; }
+        public static Race? CurrentRace { get; set; }
 
         public static void Initialize()
         {
@@ -74,5 +75,18 @@ namespace Controller
                 SectionTypes.LeftCorner
             }));
         }
+
+        public static void NextRace()
+        {
+            if (Competition.NextTrack != null) 
+            {
+                CurrentRace = new Race(Competition.NextTrack(), Competition.Participants)
+                
+            } else
+            {
+                CurrentRace = null;
+            }
+        }
+
     }
 }

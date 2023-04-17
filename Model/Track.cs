@@ -13,6 +13,12 @@ namespace Model
 
         public Track(string name, SectionTypes[] sections) 
         {
+            Name = name;
+            
+            for(int i = 0; i < sections.Length; i++)
+            {
+                Sections.AddLast(new Section(sections[i]));
+            }
 
         }
     }
