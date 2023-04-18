@@ -47,5 +47,19 @@ namespace ControllerTest
             Assert.AreEqual(result, track);
 
         }
+
+        [Test]
+        public void NextTrack_OneInQueue_RemoveTrackFromQueue()
+        {
+            Track shortTrack = new Track("TestShortTrack", new[]
+            {
+                SectionTypes.StartGrid,
+                SectionTypes.StartGrid,
+                SectionTypes.Finish
+            });
+            var result = _competition.NextTrack();
+            result = _competition.NextTrack();
+            Assert.IsNull(result);
+        }
     }
 }
