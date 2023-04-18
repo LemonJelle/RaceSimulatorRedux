@@ -22,8 +22,30 @@ namespace ControllerTest
         [Test]
         public void NextTrack_EmptyQueue_ReturnNull()
         {
-            var result = _competition.NextTrack();
+            Track result = _competition.NextTrack();
             Assert.IsNull(result);
+        }
+
+        [Test]
+        public void NextTrack_OneInQueue_ReturnTrack()
+        {
+            Track track = new Track("TestTrack", new[]
+            {
+                SectionTypes.StartGrid,
+                SectionTypes.Finish,
+                SectionTypes.LeftCorner,
+                SectionTypes.LeftCorner,
+                SectionTypes.Straight,
+                SectionTypes.Straight,
+                SectionTypes.LeftCorner,
+                SectionTypes.LeftCorner,
+
+
+            });
+            _competition.Tracks.Enqueue(track);
+            Track result = _competition.NextTrack();
+            Assert.AreEqual(result, track);
+
         }
     }
 }
