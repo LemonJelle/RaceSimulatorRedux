@@ -14,13 +14,18 @@ namespace Model
         public Track(string name, SectionTypes[] sections) 
         {
             Name = name;
-            Sections = new LinkedList<Section>();
-            
-            for(int i = 0; i < sections.Length; i++)
-            {
-                Sections.AddLast(new Section(sections[i]));
-            }
+            Sections = ConvertSectionArrayToLinkedList(sections);
 
+        }
+
+        public LinkedList<Section> ConvertSectionArrayToLinkedList(SectionTypes[] sections)
+        {
+            LinkedList<Section> sectionList = new LinkedList<Section>();
+            foreach (var section in sections)
+            {
+                sectionList.AddLast(new Section(section));
+            }
+            return sectionList;
         }
     }
 }
