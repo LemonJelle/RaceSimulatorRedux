@@ -80,7 +80,7 @@ namespace Controller
         {
             if (Competition.NextTrack != null) 
             {
-                CurrentRace = new Race(Competition.NextTrack(), Competition.Participants)
+                CurrentRace = new Race(Competition.NextTrack(), Competition.Participants);
                 
             } else
             {

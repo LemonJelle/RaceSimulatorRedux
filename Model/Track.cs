@@ -14,6 +14,7 @@ namespace Model
         public Track(string name, SectionTypes[] sections) 
         {
             Name = name;
+            Sections = new LinkedList<Section>();
             
             for(int i = 0; i < sections.Length; i++)
             {
