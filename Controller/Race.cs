@@ -29,7 +29,7 @@ namespace Controller
           
             FillPositions();
             GiveRacersStartPosition();
-            InitializeTimer(500);
+            InitialiseTimer(500);
         }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs eea)
@@ -43,7 +43,7 @@ namespace Controller
             {
                 return _positions[section];
             }
-            catch (KeyNotFoundException) //If not found, create default new section data for the givn section
+            catch (KeyNotFoundException) //If not found, create default new section data for the given section
             {
                 SectionData newSectionData = new SectionData();
                 _positions.Add(section, newSectionData);
