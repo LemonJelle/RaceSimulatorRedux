@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Controller
 {
@@ -12,8 +13,13 @@ namespace Controller
         public Track Track { get; set; }
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
+
+
         private Random _random;
         private Dictionary<Section, SectionData> _positions = new Dictionary<Section, SectionData>();
+        private System.Timers.Timer _timer;
+
+
 
         public Race(Track track, List<IParticipant> participants)
         {
@@ -23,6 +29,12 @@ namespace Controller
           
             FillPositions();
             GiveRacersStartPosition();
+            InitializeTimer(500);
+        }
+
+        private void OnTimedEvent(object sender, ElapsedEventArgs eea)
+        {
+            
         }
         public SectionData GetSectionData(Section section)
         {
@@ -106,6 +118,20 @@ namespace Controller
             {
                 GetSectionData(section);
             }
+        }
+
+        private void Start()
+        {
+            _timer.Enabled = true;
+            _timer.AutoReset = true;
+            _timer.Start();
+        }
+
+        private void InitialiseTimer(int interval)
+        {
+            _timer = new System.Timers.Timer(interval);
+            _timer.Elapsed += OnTimedEvent;
+            Start();
         }
 
 
