@@ -14,6 +14,8 @@ namespace Controller
         public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
 
+        public event EventHandler<DriversChangedEventArgs> DriversChanged;
+
 
         private Random _random;
         private Dictionary<Section, SectionData> _positions = new Dictionary<Section, SectionData>();

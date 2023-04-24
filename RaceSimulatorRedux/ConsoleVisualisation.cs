@@ -216,6 +216,8 @@ namespace RaceSimulatorRedux
 
         public static void DrawTrack(Track track)
         {
+
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
             Console.SetWindowSize(300, 500);
 
             Console.SetCursorPosition(1, 1);
@@ -223,7 +225,10 @@ namespace RaceSimulatorRedux
             _currentDirection = Compass.East; //Standard direction on the compass is east
             _cursorX = 50;
             _cursorY = 20;
+
             Console.SetCursorPosition(_cursorX, _cursorY);
+
+            
 
             //loop through all the sections
             foreach (Section section in track.Sections)
@@ -237,7 +242,7 @@ namespace RaceSimulatorRedux
 
         }
 
-        public static string[] DecideSectionToDraw(Section section)
+        private static string[] DecideSectionToDraw(Section section)
         {
 
             SectionTypes kindOfSection = section.SectionType;
@@ -333,7 +338,7 @@ namespace RaceSimulatorRedux
         }
 
        
-        public static void DrawSection(string[] sectionToDraw, Section currentSection)
+        private static void DrawSection(string[] sectionToDraw, Section currentSection)
         {
             int tempCursorY = _cursorY;
             foreach (string line in sectionToDraw)
@@ -351,7 +356,7 @@ namespace RaceSimulatorRedux
         }
 
 
-        public static void ChangeCursorPosition()
+        private static void ChangeCursorPosition()
         {
             switch (_currentDirection)
             {
@@ -370,7 +375,7 @@ namespace RaceSimulatorRedux
             }
         }
 
-        public static string ShowParticipants(string input, IParticipant left, IParticipant right)
+        private static string ShowParticipants(string input, IParticipant left, IParticipant right)
         {
             //Take first letters from the participant's names
             string? leftParticipantIcon = left?.Name.Substring(0, 1);
@@ -379,6 +384,12 @@ namespace RaceSimulatorRedux
             //Check for both participants if they are null, if not, replace an eventual 1 or 2 with the participant's first names
             string output = input.Replace("1", leftParticipantIcon ?? " ").Replace("2", rightParticipantIcon ?? " ");
             return output;
+        }
+
+        public static void OnDriversChanged(object sender, DriversChangedEventArgs dcea)
+        {
+            DrawTrack(dcea.Track);
+
         }
     }
 
