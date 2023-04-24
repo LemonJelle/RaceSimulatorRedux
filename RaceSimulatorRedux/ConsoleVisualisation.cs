@@ -131,27 +131,27 @@ namespace RaceSimulatorRedux
         private static string[] _cornerSouthLeft =
         {
             "|   #",
-            "|   2",
+            "|   1",
             "|    ",
-            "|1   ",
+            "|2   ",
             "#===="
         };
 
         private static string[] _cornerWestLeft =
         {
             "/====",
-            "|1   ",
+            "|2   ",
             "|    ",
-            "|   2",
+            "|   1",
             "|   /"
         };
 
         private static string[] _cornerNorthLeft =
         {
             "====#",
-            "   1|",
+            "   2|",
             "    |",
-            " 2  |",
+            " 1  |",
             "#   |"
 
         };
@@ -170,27 +170,27 @@ namespace RaceSimulatorRedux
         private static string[] _cornerWestRight =
         {
             "|   #",
-            "|   2",
+            "|   1",
             "|    ",
-            "|1   ",
+            "|2   ",
             "#===="
         };
 
         private static string[] _cornerNorthRight =
         {
             "/====",
-            "|1   ",
+            "|2   ",
             "|    ",
-            "|   2",
+            "|   1",
             "|   /"
         };
 
         private static string[] _cornerEastRight =
         {
             "====#",
-            "   1|",
+            "   2|",
             "    |",
-            " 2  |",
+            " 1  |",
             "#   |"
 
         };
@@ -198,9 +198,9 @@ namespace RaceSimulatorRedux
         private static string[] _cornerSouthRight =
         {
             "/   |",
-            " 2  |",
+            " 1  |",
             "    |",
-            "   1|",
+            "   2|",
             "====/"
         };
 
@@ -332,14 +332,17 @@ namespace RaceSimulatorRedux
 
         }
 
-        //checks the current orientation        
+       
         public static void DrawSection(string[] sectionToDraw, Section currentSection)
         {
             int tempCursorY = _cursorY;
             foreach (string line in sectionToDraw)
             {
                 Console.SetCursorPosition(_cursorX, tempCursorY);
-                Console.Write(line);
+                //Console.Write(line);
+
+                //run the strings through the ShowParticipants method which checks for a participant and returns the strings with an eventual participant
+                Console.Write(ShowParticipants(line, Data.CurrentRace.GetSectionData(currentSection).Left, Data.CurrentRace.GetSectionData(currentSection).Right));
                 tempCursorY++;
 
 
@@ -367,9 +370,15 @@ namespace RaceSimulatorRedux
             }
         }
 
-        public static void ChangeDirection(string direction)
+        public static string ShowParticipants(string input, IParticipant left, IParticipant right)
         {
+            //Take first letters from the participant's names
+            string? leftParticipantIcon = left?.Name.Substring(0, 1);
+            string? rightParticipantIcon = right?.Name.Substring(0, 1);
 
+            //Check for both participants if they are null, if not, replace an eventual 1 or 2 with the participant's first names
+            string output = input.Replace("1", leftParticipantIcon ?? " ").Replace("2", rightParticipantIcon ?? " ");
+            return output;
         }
     }
 

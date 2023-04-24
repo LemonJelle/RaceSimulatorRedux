@@ -10,7 +10,7 @@ namespace ControllerTest
     [TestFixture]
     public class Model_Competition_NextTrackShould
     {
-        Competition? _competition { get; set; }
+        Competition _competition { get; set; }
 
 
         [SetUp]
@@ -44,7 +44,7 @@ namespace ControllerTest
             });
             _competition.Tracks.Enqueue(track);
             Track result = _competition.NextTrack();
-            Assert.AreEqual(result, track);
+            Assert.That(track, Is.EqualTo(result));
 
         }
 

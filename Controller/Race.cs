@@ -10,27 +10,28 @@ namespace Controller
     public class Race
     {
         public Track Track { get; set; }
-        public List<IParticipant>? Participants { get; set; }
+        public List<IParticipant> Participants { get; set; }
         public DateTime StartTime { get; set; }
-        private Random? _random;
-        private Dictionary<Section, SectionData>? _positions;
+        private Random _random;
+        private Dictionary<Section, SectionData> _positions = new Dictionary<Section, SectionData>();
 
         public Race(Track track, List<IParticipant> participants)
         {
             Track = track;
             Participants = participants;
             _random = new Random(DateTime.Now.Millisecond);
-            _positions = new Dictionary<Section, SectionData>();
+          
             FillPositions();
             GiveRacersStartPosition();
         }
         public SectionData GetSectionData(Section section)
         {
+            // Return the sectiondata for the given section
             try
             {
                 return _positions[section];
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException) //If not found, create default new section data for the givn section
             {
                 SectionData newSectionData = new SectionData();
                 _positions.Add(section, newSectionData);
