@@ -332,7 +332,7 @@ namespace RaceSimulatorRedux
                     }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(kindOfSection), kindOfSection, "Something went wrong with the sections!");
+                    throw new ArgumentOutOfRangeException(nameof(kindOfSection), kindOfSection, "Get naenae'd");
             }
 
         }

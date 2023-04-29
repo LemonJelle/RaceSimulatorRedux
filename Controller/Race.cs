@@ -36,6 +36,7 @@ namespace Controller
 
         private void OnTimedEvent(object sender, ElapsedEventArgs eea)
         {
+            AdvanceParticipants();
             
         }
         public SectionData GetSectionData(Section section)
@@ -122,6 +123,43 @@ namespace Controller
             }
         }
 
+        private void AdvanceParticipants()
+        {
+            //update distance when participant is present in position
+            //check if distance > max distance of section
+            //if so, move participant to next section in _positions
+            //invoke driverschanged event to signal visualisation update
+            //use AdvanceParticipantsToNextSection() method to advance to every section to comply with the SOLID principles
+            //use positions dictionary as list of sections to loop through
+
+            Section currentSection = Track.Sections.First();
+            Section nextSection;
+
+            for
+
+
+
+
+
+
+
+
+
+        }
+
+        private void AdvanceParticipantsToNextSection(Section currentSection, Section nextSection)
+        {
+            // Right participant
+            
+            //get section data of sections
+            //check 
+
+        } 
+
+        private int CalculateRealSpeed(int performance, int speed)
+        {
+            return performance * speed;
+        }
         private void Start()
         {
             _timer.Enabled = true;
@@ -134,6 +172,14 @@ namespace Controller
             _timer = new System.Timers.Timer(interval);
             _timer.Elapsed += OnTimedEvent;
             Start();
+        }
+
+        private void InvokeDriversChangedEvent()
+        {
+            DriversChanged.Invoke(this, new DriversChangedEventArgs
+            {
+                EventTrack = Track
+            });
         }
 
 
