@@ -212,24 +212,24 @@ namespace RaceSimulatorRedux
         private static int _cursorY; // cursor Y position
         private static Compass _currentDirection; //direction the track is being drawn in, this changes in the corners
 
-        
+        public static void Initialise()
+        {
+            _currentDirection = Compass.East; //Standard direction on the compass is east
+            Data.CurrentRace.DriversChanged += OnDriversChanged;
+
+        }
 
         public static void DrawTrack(Track track)
         {
 
-            Data.CurrentRace.DriversChanged += OnDriversChanged;
-            Console.SetWindowSize(300, 500);
+            Console.SetWindowSize(100, 100);
 
             Console.SetCursorPosition(1, 1);
             Console.Write($"Track name: {track.Name}");
-            _currentDirection = Compass.East; //Standard direction on the compass is east
             _cursorX = 50;
             _cursorY = 20;
-
             Console.SetCursorPosition(_cursorX, _cursorY);
-
             
-
             //loop through all the sections
             foreach (Section section in track.Sections)
             {
@@ -388,7 +388,7 @@ namespace RaceSimulatorRedux
 
         public static void OnDriversChanged(object sender, DriversChangedEventArgs dcea)
         {
-            DrawTrack(dcea.Track);
+            DrawTrack(dcea.EventTrack);
 
         }
     }

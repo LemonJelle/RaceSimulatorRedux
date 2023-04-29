@@ -78,10 +78,10 @@ namespace Controller
 
         public static void NextRace()
         {
-            if (Competition.NextTrack != null) 
+            if (Competition.NextTrack != null)
             {
                 CurrentRace = new Race(Competition.NextTrack(), Competition.Participants);
-                
+
             } else
             {
                 CurrentRace = null;

@@ -21,6 +21,7 @@ namespace Controller
         private Dictionary<Section, SectionData> _positions = new Dictionary<Section, SectionData>();
         private System.Timers.Timer _timer;
 
+        private int sectionLength = 100;
 
 
         public Race(Track track, List<IParticipant> participants)
@@ -125,7 +126,7 @@ namespace Controller
 
         private void AdvanceParticipants()
         {
-            //update distance when participant is present in position
+            //update distance when participant is present in section
             //check if distance > max distance of section
             //if so, move participant to next section in _positions
             //invoke driverschanged event to signal visualisation update
@@ -133,27 +134,49 @@ namespace Controller
             //use positions dictionary as list of sections to loop through
 
             Section currentSection = Track.Sections.First();
-            Section nextSection;
+            Section nextSection = Track.Sections.ElementAt(1);
+            foreach (KeyValuePair<Section, SectionData> section in _positions)
+            {
+                AdvanceParticipantsToNextSection(currentSection, nextSection);
+                nextSection = currentSection;
+            }
 
-            for
-
-
-
-
-
-
-
-
-
+            
         }
 
         private void AdvanceParticipantsToNextSection(Section currentSection, Section nextSection)
         {
-            // Right participant
+            // get section data of current and next section
+            SectionData currentSectionData = GetSectionData(currentSection);
+            SectionData nextSectionData = GetSectionData(nextSection);
             
-            //get section data of sections
-            //check 
+            // Left
+            currentSectionData.DistanceLeft += CalculateRealSpeed(currentSectionData.Left.Equipment.Performance,
+                currentSectionData.Left.Equipment.Speed);
 
+            if (currentSectionData.DistanceLeft >= 100)
+            {
+                if (nextSectionData.Left == null)
+                {
+                    nextSectionData.Left = currentSectionData.Left;
+                    currentSectionData.Left = null;
+                    currentSectionData.DistanceLeft = 0;
+                }
+            }
+            
+            // Right
+            currentSectionData.DistanceRight += CalculateRealSpeed(currentSectionData.Right.Equipment.Performance,
+                currentSectionData.Right.Equipment.Speed);
+
+            if (currentSectionData.DistanceRight >= 100)
+            {
+                if (nextSectionData.Right == null)
+                {
+                    nextSectionData.Right = currentSectionData.Right;
+                    currentSectionData.Right = null;
+                    currentSectionData.DistanceRight = 0;
+                }
+            }
         } 
 
         private int CalculateRealSpeed(int performance, int speed)
