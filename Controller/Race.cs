@@ -20,8 +20,8 @@ namespace Controller
         private Random _random;
         private Dictionary<Section, SectionData> _positions = new Dictionary<Section, SectionData>();
         private System.Timers.Timer _timer;
+        
 
-        private int sectionLength = 100;
 
 
         public Race(Track track, List<IParticipant> participants)
@@ -126,57 +126,46 @@ namespace Controller
 
         private void AdvanceParticipants()
         {
-            //update distance when participant is present in section
+
+            //update distance when participant is present in position
             //check if distance > max distance of section
             //if so, move participant to next section in _positions
             //invoke driverschanged event to signal visualisation update
             //use AdvanceParticipantsToNextSection() method to advance to every section to comply with the SOLID principles
             //use positions dictionary as list of sections to loop through
 
-            Section currentSection = Track.Sections.First();
-            Section nextSection = Track.Sections.ElementAt(1);
-            foreach (KeyValuePair<Section, SectionData> section in _positions)
+            //create a LinkedListNode so we can go through the sections to start with, the last one 
+            LinkedListNode<Section> currentSection = Track.Sections.Last;
+
+            //loop to move all participants, this breaks if current section is not null
+            while (currentSection  != null)
             {
-                AdvanceParticipantsToNextSection(currentSection, nextSection);
-                nextSection = currentSection;
+                currentSection =
             }
+            
+
+            Section currentSection = Track.Sections.First();
+            Section nextSection;
 
             
+
+
+
+
+
+
+
+
+
         }
 
         private void AdvanceParticipantsToNextSection(Section currentSection, Section nextSection)
         {
-            // get section data of current and next section
-            SectionData currentSectionData = GetSectionData(currentSection);
-            SectionData nextSectionData = GetSectionData(nextSection);
+            // Right participant
             
-            // Left
-            currentSectionData.DistanceLeft += CalculateRealSpeed(currentSectionData.Left.Equipment.Performance,
-                currentSectionData.Left.Equipment.Speed);
+            //get section data of sections
+            //check 
 
-            if (currentSectionData.DistanceLeft >= 100)
-            {
-                if (nextSectionData.Left == null)
-                {
-                    nextSectionData.Left = currentSectionData.Left;
-                    currentSectionData.Left = null;
-                    currentSectionData.DistanceLeft = 0;
-                }
-            }
-            
-            // Right
-            currentSectionData.DistanceRight += CalculateRealSpeed(currentSectionData.Right.Equipment.Performance,
-                currentSectionData.Right.Equipment.Speed);
-
-            if (currentSectionData.DistanceRight >= 100)
-            {
-                if (nextSectionData.Right == null)
-                {
-                    nextSectionData.Right = currentSectionData.Right;
-                    currentSectionData.Right = null;
-                    currentSectionData.DistanceRight = 0;
-                }
-            }
         } 
 
         private int CalculateRealSpeed(int performance, int speed)
